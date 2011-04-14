@@ -6,7 +6,10 @@ require 'rr'
 require 'shoulda'
 require 'factory_girl'
 
-#require 'google_data/service'
+require 'google_data'
+
+
+require 'factories'
 
 class ActiveSupport::TestCase
   
