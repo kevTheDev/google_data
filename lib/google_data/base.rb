@@ -20,8 +20,8 @@ require "net/http"
 require "net/https"
 require 'time'
 require 'cgi'
-require 'gdata4ruby/request'
-require 'gdata4ruby/utils/utils'
+require 'google_data/request'
+require 'google_data/utils/utils'
 require 'rexml/document'
 
 Net::HTTP.version_1_2
@@ -69,7 +69,7 @@ module GData4Ruby
     @proxy_info = nil
     @auth_token = nil
     @debug = false
-    @gdata_version = '2.1'
+    @google_data_version = '2.1'
 
     #Contains the ProxyInfo object for using a proxy server
     attr_accessor :proxy_info
@@ -78,12 +78,12 @@ module GData4Ruby
     attr_accessor :debug
     
     #The GData version used by the service
-    attr_accessor :gdata_version
+    attr_accessor :google_data_version
 
     #Optionally, pass a hash of attributes to populate the class.  If you want to use a GData version
-    #other than the default (2.1), pass a key/value pair, i.e. {:gdata_version => '1.0'}      
+    #other than the default (2.1), pass a key/value pair, i.e. {:google_data_version => '1.0'}      
     def initialize(attributes = {})
-      @gdata_version = attributes[:gdata_version] ? attributes[:gdata_version] : '2.1'
+      @google_data_version = attributes[:google_data_version] ? attributes[:google_data_version] : '2.1'
     end
     
     #Sends a request to the Google Data System.  Accepts a valid Request object, and returns a 
@@ -147,10 +147,10 @@ module GData4Ruby
     def add_auth_header(request)
       if @auth_token
         if request.headers
-          request.headers.merge!({'Authorization' => "GoogleLogin auth=#{@auth_token}", "GData-Version" => @gdata_version})
+          request.headers.merge!({'Authorization' => "GoogleLogin auth=#{@auth_token}", "GData-Version" => @google_data_version})
         else 
           content_type = (request.type == :get or request.type == :delete) ? 'application/x-www-form-urlencoded' : 'application/atom+xml'
-          request.headers = {'Authorization' => "GoogleLogin auth=#{@auth_token}", "GData-Version" => @gdata_version, 'Content-Type' => content_type}
+          request.headers = {'Authorization' => "GoogleLogin auth=#{@auth_token}", "GData-Version" => @google_data_version, 'Content-Type' => content_type}
         end
       end
     end

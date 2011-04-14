@@ -15,7 +15,7 @@
 # Feel free to use and update, but be sure to contribute your
 # code back to the project and attribute as required by the license.
 #++
-require 'gdata4ruby/base' 
+require 'google_data/base' 
 
 module GData4Ruby
   #The service class is the main handler for all direct interactions with the 
@@ -28,7 +28,7 @@ module GData4Ruby
     # The token returned by the Google servers, used to authorize all subsequent messages
     attr_reader :auth_token
     
-    #Accepts an optional attributes hash for initialization values, most likely :gdata_version
+    #Accepts an optional attributes hash for initialization values, most likely :google_data_version
     def initialize(attributes = {})
       super(attributes)
       attributes.each do |key, value|

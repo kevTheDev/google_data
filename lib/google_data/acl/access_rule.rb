@@ -15,7 +15,7 @@
 # Feel free to use and update, but be sure to contribute your
 # code back to the project and attribute as required by the license.
 #++
-require 'gdata4ruby/gdata_object'
+require 'google_data/google_data_object'
 
 module GData4Ruby
   

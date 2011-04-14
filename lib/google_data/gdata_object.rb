@@ -16,7 +16,7 @@
 # code back to the project and attribute as required by the license.
 #++
 
-require 'gdata4ruby/service'
+require 'google_data/service'
 require 'time'
 
 module GData4Ruby
