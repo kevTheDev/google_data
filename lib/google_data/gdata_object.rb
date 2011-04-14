@@ -19,7 +19,7 @@
 require 'google_data/service'
 require 'time'
 
-module GData4Ruby
+module GoogleData
   #The GDataObject class represents any <entry> object returned by a Google Service.  Includes
   #attributes for accessing the common elements/parameters of the object, and methods for CRUD
   #operations.

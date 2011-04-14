@@ -17,7 +17,7 @@
 #++
 require 'google_data/google_data_object'
 
-module GData4Ruby
+module GoogleData
   
   #Contains classes for interacting with Google ACL feeds
   module ACL
@@ -45,7 +45,7 @@ module GData4Ruby
       def initialize(service, parent, attributes = {})
         super(service, attributes)
         @xml = XML
-        raise ArgumentError, 'parent must be a GData4Ruby::GDataObject' if not parent.is_a? GData4Ruby::GDataObject
+        raise ArgumentError, 'parent must be a GoogleData::GDataObject' if not parent.is_a? GoogleData::GDataObject
         @parent = parent
         @role = @user = nil
       end
@@ -92,10 +92,10 @@ module GData4Ruby
       def self.find(service, parent, args = {})
         raise ArgumentError, 'Must supply a username or role to find by' if not args[:user] and not args[:role]
         rules = []
-        ret = service.send_request(GData4Ruby::Request.new(:get, parent.acl_uri))
+        ret = service.send_request(GoogleData::Request.new(:get, parent.acl_uri))
         xml = REXML::Document.new(ret.read_body).root
         xml.elements.each("entry") do |e|
-          e = GData4Ruby::Utils::add_namespaces(e)
+          e = GoogleData::Utils::add_namespaces(e)
           rule = AccessRule.new(service, parent)
           rule.load(e.to_s)
           return rule if args[:user] and rule.user == args[:user]

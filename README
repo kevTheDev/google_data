@@ -1,13 +1,13 @@
-#=GData4Ruby
+#=GoogleData
 #
 #==Introduction
-#GData4Ruby is a full featured wrapper for the Google Data base API.  GData4Ruby provides the ability
+#GoogleData is a full featured wrapper for the Google Data base API.  GoogleData provides the ability
 #to authenticate with GData using the ClientLogin method.  The package also includes a base google_data object 
 #that can be subclassed to provide basic CRUD functions for all Google API service objects.  Additionally,
 #a basic ACL object is included for interacting with ACL feeds and setting access rules.
 #
 #==Author and Contact Information
-#GData4Ruby was created and is maintained by {Mike Reich}[mailto:mike@seabourneconsulting.com] 
+#GoogleData was created and is maintained by {Mike Reich}[mailto:mike@seabourneconsulting.com] 
 #and is licenses under the LGPL v3.  You can find the text of the LGPL 
 #here: http://www.gnu.org/licenses/lgpl.html.  Feel free to use and update, but be sure to contribute your
 #code back to the project and attribute as required by the license.
@@ -16,7 +16,7 @@
 #http://cookingandcoding.com/google_data/
 #
 #==Description
-#GData4Ruby has three major components: the service, the GData object and the AccessRule object.  Each service
+#GoogleData has three major components: the service, the GData object and the AccessRule object.  Each service
 #represents a google account, and includes a username (email) and a password.  You can use the GData service
 #to authenticate either a google account or a google apps account.
 #

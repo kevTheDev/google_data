@@ -26,9 +26,9 @@ require 'rexml/document'
 
 Net::HTTP.version_1_2
 
-# GData4Ruby is a full featured wrapper for the base google data API
+# GoogleData is a full featured wrapper for the base google data API
 
-module GData4Ruby
+module GoogleData
   
   class AuthenticationFailed < StandardError; end #:nodoc: all
 
@@ -89,7 +89,7 @@ module GData4Ruby
     #Sends a request to the Google Data System.  Accepts a valid Request object, and returns a 
     #HTTPResult class.
     def send_request(request)
-      raise ArgumentError 'Request must be a GData4Ruby::Request object' if not request.is_a?Request
+      raise ArgumentError 'Request must be a GoogleData::Request object' if not request.is_a?Request
       puts "sending #{request.type} to url = #{request.url.to_s}" if @debug
       do_request(request)
     end

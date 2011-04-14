@@ -15,7 +15,7 @@
 # Feel free to use and update, but be sure to contribute your
 # code back to the project and attribute as required by the license.
 #++
-module GData4Ruby
+module GoogleData
   #A helper class that includes commonly used utility methods.
   class Utils
     #Adds common Google namespaces to an element.  Useful for processing individual events returned from in a feed.

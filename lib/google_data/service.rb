@@ -17,7 +17,7 @@
 #++
 require 'google_data/base' 
 
-module GData4Ruby
+module GoogleData
   #The service class is the main handler for all direct interactions with the 
   #Google Data API.
   

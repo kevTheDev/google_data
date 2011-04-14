@@ -17,7 +17,7 @@
 #++
 require "uri"
 
-module GData4Ruby
+module GoogleData
   #The Request class holds all information needed to make a Request to a Google service.
   class Request
     #The HTTP request type, must be one of :get, :post, :put, :delete
