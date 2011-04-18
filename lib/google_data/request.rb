@@ -32,7 +32,7 @@ module GoogleData
     
     #A hash of additional query parameters (i.e. {'param' => 'value') to append to the request url
     def parameters=(query_parameters)
-      raise ArgumentError 'Query parameters must be a Hash' if !query_parameters.nil? && !query_parameters.is_a?(Hash)
+      raise ArgumentError, 'Query parameters must be a Hash' if !query_parameters.nil? && !query_parameters.is_a?(Hash)
       @parameters = "?#{query_parameters.to_a.collect{|a| a.join("=")}.join("&")}"
     end
     
