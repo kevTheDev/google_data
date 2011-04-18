@@ -1,4 +1,4 @@
-require "uri"
+require 'uri'
 
 module GoogleData
   #The Request class holds all information needed to make a Request to a Google service.
@@ -11,10 +11,6 @@ module GoogleData
     
     #Optional.  Additional headers to pass with the request.
     attr_accessor :headers
-    
-    #Optional.  Additional query parameters (i.e. "?param=value") to append to the request url
-    attr_reader :parameters
-    
   
     #Creates a new request object.
     def initialize(type, url, content = '', headers = {}, query_parameters = {})
