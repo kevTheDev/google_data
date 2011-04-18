@@ -61,6 +61,58 @@ module GoogleData
         
       end
       
+      context 'is_publish_request?' do
+
+        should 'return false if type == :get' do
+          @request.type = :get
+          assert_equal false, @request.is_publish_request?
+        end
+        
+        should 'return false if type == :delete' do
+          @request.type = :delete
+          assert_equal false, @request.is_publish_request?
+        end
+        
+        should 'return true if type == :post' do
+          @request.type = :post
+          assert @request.is_publish_request?
+        end
+        
+        should 'return true if type == :put' do
+          @request.type = :put
+          assert @request.is_publish_request?
+        end
+        
+      end
+      
+      context 'content=' do
+        
+        should 'set the content as an empty string if type == :get' do
+          @request.type = :get
+          @request.content = 'content'
+          assert_equal '', @request.content
+        end
+        
+        should 'set the content as an empty string if type == :delete' do
+          @request.type = :delete
+          @request.content = 'content'
+          assert_equal '', @request.content
+        end
+        
+        should 'set the content if type == :put' do
+          @request.type = :put
+          @request.content = 'content'
+          assert_equal 'content', @request.content
+        end
+        
+        should 'set the content if type == :post' do
+          @request.type = :post
+          @request.content = 'content'
+          assert_equal 'content', @request.content
+        end
+        
+      end
+      
     end
     
   end
