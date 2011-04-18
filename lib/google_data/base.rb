@@ -16,8 +16,8 @@
 # code back to the project and attribute as required by the license.
 #++
 
-require "net/http"
-require "net/https"
+require 'net/http'
+require 'net/https'
 require 'time'
 require 'cgi'
 require 'google_data/request'
@@ -40,25 +40,7 @@ module GoogleData
     
   class QueryParameterError < StandardError; end
 
-  #The ProxyInfo class contains information for configuring a proxy connection
   
-  class ProxyInfo
-    attr_accessor :address, :port, :username, :password
-    @address = nil
-    @port = nil
-    @username = nil
-    @password = nil
-
-    #The initialize function accepts four variables for configuring the ProxyInfo object.  
-    #The proxy connection is initiated using the builtin Net::HTTP proxy support.
-    
-    def initialize(address, port, username=nil, password=nil)
-      @address = address
-      @port = port
-      @username = username
-      @password = password
-    end
-  end
   
   #The Base class includes the basic HTTP methods for communicating with the Google Data API.
   #You shouldn't use this class directly, rather access the functionality through 
@@ -102,15 +84,10 @@ module GoogleData
       http = get_http_object(request.url)
       puts "Sending request\nHeader: #{request.headers.inspect.to_s}\nContent: #{request.content.to_s}\n" if @debug
       http.start do |ht|
-        ret = case request.type
-          when :get
-            ht.get(request.url.to_s, request.headers)
-          when :post
-            ht.post(request.url.to_s, request.content, request.headers)
-          when :put
-            ht.put(request.url.to_s, request.content, request.headers)
-          when :delete
-            ht.delete(request.url.to_s, request.headers)
+        if request.is_publish_request?
+          ret = ht.send(request.type, request.url.to_s, request.content, request.headers)
+        else
+          ret = ht.send(request.type, request.url.to_s, request.headers)
         end
       end
       
