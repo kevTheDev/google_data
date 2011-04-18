@@ -110,7 +110,22 @@ module GoogleData
           @request.content = 'content'
           assert_equal 'content', @request.content
         end
-        
+      end
+      
+      context 'url=' do
+        should 'call URI.parse on the url' do
+          mock(URI).parse('www.example.com').once
+          @request.url = 'www.example.com'
+        end
+      end
+      
+      context 'url' do
+        should 'build the url from the url and parameters' do
+          mock(@request).parameters { '?p=1' }.once
+          mock(URI).parse("http://www.google.com?p=1").once
+          
+          @request.url
+        end
       end
       
     end
