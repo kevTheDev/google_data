@@ -17,7 +17,7 @@ module GoogleData
     
   
     #Creates a new request object.
-    def initialize(type, url, content = nil, headers = nil, query_parameters = {})
+    def initialize(type, url, content = nil, headers = {}, query_parameters = {})
       self.headers = headers
       self.content = content
       self.type = type
@@ -26,7 +26,7 @@ module GoogleData
     end
     
     def type=(type)
-      raise ArgumentError unless [:get, :post, :put, :delete].include?(type)
+      raise ArgumentError('Invalid HTTP request type') unless [:get, :post, :put, :delete].include?(type)
       @type = type
     end
     
