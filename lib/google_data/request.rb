@@ -7,7 +7,7 @@ module GoogleData
     attr_reader :type
     
     #The HTTP request content, only valid for :put and :post requests
-    attr_accessor :content
+    attr_reader :content
     
     #Optional.  Additional headers to pass with the request.
     attr_accessor :headers
