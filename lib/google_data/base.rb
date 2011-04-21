@@ -20,8 +20,11 @@ require 'net/http'
 require 'net/https'
 require 'time'
 require 'cgi'
+
 require 'google_data/request'
+require 'google_data/proxy_info'
 require 'google_data/utils/utils'
+
 require 'rexml/document'
 
 Net::HTTP.version_1_2
@@ -107,8 +110,8 @@ module GoogleData
     end
 
     def get_http_object(location)
-      if @proxy_info and @proxy_info.address
-	     http = Net::HTTP.new(location.host, location.port, @proxy_info.address, @proxy_info.port, @proxy_info.username, @proxy_info.password)
+      if valid_proxy?
+	      http = Net::HTTP.new(location.host, location.port, @proxy_info.address, @proxy_info.port, @proxy_info.username, @proxy_info.password)
       else
 	     http = Net::HTTP.new(location.host, location.port)
 	    end
@@ -131,5 +134,10 @@ module GoogleData
         end
       end
     end
+    
+    def valid_proxy?
+      @proxy_info
+    end
+    
   end
 end
