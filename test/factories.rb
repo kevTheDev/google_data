@@ -1,1 +1,0 @@
-require 'factories/request_factory'
