@@ -6,12 +6,34 @@ module GoogleData
 
   class ServiceTest < ActiveSupport::TestCase
     
+    context 'parse_auth_token' do
+      
+      setup do
+        @service = Service.new({:google_data_version => '3.0'})
+        @valid_body = ["SID=DQAAAGgA...7Zg8CTN", "LSID=DQAAAGsA...lk8BBbG", "Auth=DQAAAGgA...dk3fA5N"]
+        
+      end
+      
+      should 'raise AuthenticationFailed if response_body_lines size != 3' do
+        assert_raises(AuthenticationFailed) { @service.parse_auth_token([]) }
+      end
+      
+      should 'raise AuthenticationFailed if response_body_lines[2] does not include Auth=' do
+        assert_raises(AuthenticationFailed) { @service.parse_auth_token(['', '', '']) }
+      end
+      
+      should 'set the @auth_token' do
+        @service.parse_auth_token(@valid_body)
+        
+        assert_equal 'DQAAAGgA...dk3fA5N', @service.auth_token
+      end
+      
+    end
+    
     context 'parse_body' do
       
       setup do
         @service = Service.new({:google_data_version => '3.0'})
-
-        
       end
       
       should 'return an array of size 3' do

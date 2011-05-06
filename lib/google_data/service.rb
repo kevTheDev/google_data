@@ -61,13 +61,17 @@ module GoogleData
 
     def parse_successful_response(response)
       body = response.read_body
-      lines = parse_body(body)
-      @auth_token = lines[2].gsub("Auth=", '').strip
-      true
+      parse_auth_token(parse_body(body))
     end
     
     def parse_body(response_body)
       response_body.respond_to?(:lines) ? response_body.lines.to_a : []
+    end
+    
+    def parse_auth_token(response_body_lines)
+      raise AuthenticationFailed if response_body_lines.size != 3
+      raise AuthenticationFailed if !response_body_lines[2].include?('Auth=')
+      @auth_token = response_body_lines[2].gsub('Auth=', '').strip
     end
     
     def reset_auth_token
