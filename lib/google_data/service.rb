@@ -44,17 +44,14 @@ module GoogleData
     def authenticate(username, password, google_service, source='GoogleData')
       reset_auth_token
       response = send_request(Request.new(:post, AUTH_URL, "Email=#{username}&Passwd=#{password}&source=#{source}&service=#{google_service}&accountType=HOSTED_OR_GOOGLE"))
-      
+      parse_response(response)
+    end
+    
+    def parse_response(response)
       raise AuthenticationFailed if response.class != Net::HTTPOK
       parse_successful_response(response)
     end
-    
-    private
-    
-    def reset_auth_token
-      @auth_token = nil
-    end
-    
+
     def parse_successful_response(response)
       body = response.read_body
       lines = body.send(body.respond_to?(:lines) ? :lines : :to_s).to_a
@@ -63,6 +60,12 @@ module GoogleData
       @password = password
       return true
     end
+    
+    
+    def reset_auth_token
+      @auth_token = nil
+    end
+    
     
     
   end
