@@ -39,20 +39,27 @@ module GoogleData
     # The authenticate method passes the username and password to google servers.  
     # If authentication succeeds, returns true, otherwise raises the AuthenticationFailed error.
     # Thanks to David King and Scott Taylor for Ruby 1.9 fix.
-    def authenticate(username, password, service, source='GoogleData')
+    
+    # google_service e.g. cl == Google Calendar
+    def authenticate(username, password, google_service, source='GoogleData')
       @auth_token = nil
-      response = nil
-      response = send_request(Request.new(:post, AUTH_URL, "Email=#{username}&Passwd=#{password}&source=#{source}&service=#{service}&accountType=HOSTED_OR_GOOGLE"))
-      if response.class == Net::HTTPOK
-        body = response.read_body
-        lines = body.send(body.respond_to?(:lines) ? :lines : :to_s).to_a
-        @auth_token = lines.to_a[2].gsub("Auth=", "").strip
-        @account = username
-        @password = password
-        return true
-      else
-        raise AuthenticationFailed
-      end
+      response = send_request(Request.new(:post, AUTH_URL, "Email=#{username}&Passwd=#{password}&source=#{source}&service=#{google_service}&accountType=HOSTED_OR_GOOGLE"))
+      
+      raise AuthenticationFailed if response.class != Net::HTTPOK
+      parse_successful_response(response)
     end
+    
+    private
+    
+    def parse_successful_response(response)
+      body = response.read_body
+      lines = body.send(body.respond_to?(:lines) ? :lines : :to_s).to_a
+      @auth_token = lines.to_a[2].gsub("Auth=", "").strip
+      @account = username
+      @password = password
+      return true
+    end
+    
+    
   end
 end
