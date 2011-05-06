@@ -6,7 +6,6 @@ module GoogleData
 
   class ServiceTest < ActiveSupport::TestCase
     
-    
     context 'authenticate' do
       
       setup do

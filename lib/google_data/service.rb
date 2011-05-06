@@ -42,7 +42,7 @@ module GoogleData
     
     # google_service e.g. cl == Google Calendar
     def authenticate(username, password, google_service, source='GoogleData')
-      @auth_token = nil
+      reset_auth_token
       response = send_request(Request.new(:post, AUTH_URL, "Email=#{username}&Passwd=#{password}&source=#{source}&service=#{google_service}&accountType=HOSTED_OR_GOOGLE"))
       
       raise AuthenticationFailed if response.class != Net::HTTPOK
@@ -50,6 +50,10 @@ module GoogleData
     end
     
     private
+    
+    def reset_auth_token
+      @auth_token = nil
+    end
     
     def parse_successful_response(response)
       body = response.read_body
