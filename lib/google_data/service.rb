@@ -23,7 +23,7 @@ module GoogleData
   
   class Service < Base
     #Convenience attribute contains the currently authenticated account name
-    attr_reader :account
+    attr_reader :account # why is this not username??
     
     # The token returned by the Google servers, used to authorize all subsequent messages
     attr_reader :auth_token
@@ -43,8 +43,15 @@ module GoogleData
     # google_service e.g. cl == Google Calendar
     def authenticate(username, password, google_service, source='GoogleData')
       reset_auth_token
+      set_credentials(username, password)
+      
       response = send_request(Request.new(:post, AUTH_URL, "Email=#{username}&Passwd=#{password}&source=#{source}&service=#{google_service}&accountType=HOSTED_OR_GOOGLE"))
       parse_response(response)
+    end
+    
+    def set_credentials(username, password)
+      @account  = username
+      @password = password
     end
     
     def parse_response(response)
@@ -54,19 +61,18 @@ module GoogleData
 
     def parse_successful_response(response)
       body = response.read_body
-      lines = body.send(body.respond_to?(:lines) ? :lines : :to_s).to_a
-      @auth_token = lines.to_a[2].gsub("Auth=", "").strip
-      @account = username
-      @password = password
-      return true
+      lines = parse_body(body)
+      @auth_token = lines[2].gsub("Auth=", '').strip
+      true
     end
     
+    def parse_body(response_body)
+      response_body.respond_to?(:lines) ? response_body.lines.to_a : []
+    end
     
     def reset_auth_token
       @auth_token = nil
     end
-    
-    
     
   end
 end

@@ -6,6 +6,36 @@ module GoogleData
 
   class ServiceTest < ActiveSupport::TestCase
     
+    context 'parse_body' do
+      
+      setup do
+        @service = Service.new({:google_data_version => '3.0'})
+
+        
+      end
+      
+      should 'return an array of size 3' do
+        body = "SID=DQAAAGgA...7Zg8CTN
+                 LSID=DQAAAGsA...lk8BBbG
+                 Auth=DQAAAGgA...dk3fA5N"
+        
+        parsed_body = @service.parse_body(body)
+        assert parsed_body.is_a?(Array)
+        assert_equal 3, parsed_body.size
+      end
+      
+      should 'return an empty array if body is nil' do
+        parsed_body = @service.parse_body(nil)
+        assert parsed_body.empty?
+      end
+      
+      should 'return an empty array if body string is empty' do
+        parsed_body = @service.parse_body('')
+        assert parsed_body.empty?
+      end
+    end
+    
+    
     context 'parse_response' do
       
       setup do
@@ -13,7 +43,6 @@ module GoogleData
         
         @response = Object.new
       end
-        
       
       should 'raise AuthenticationFailed if response is not Net::HTTPOK' do
         stub(@response).class { Net::HTTPBadRequest }
